@@ -23,19 +23,14 @@ namespace ariel
         else
             return false;
     }
-    void Cowboy::print()
+    string Cowboy::print()
     {
-        stringstream output;
-        streambuf *coutBuffer = std::cout.rdbuf();
-        cout.rdbuf(output.rdbuf());
-        Character::print();
-        cout.rdbuf(coutBuffer);
-        string characterPrint = output.str();
-        cout << "C" << characterPrint << endl;
+        return "C " + Character::print();
+
     }
     void Cowboy::reload()
     {
-        if (this->numOfBullets = 0)
+        if (this->numOfBullets == 0)
         {
             this->numOfBullets += 6;
         }

@@ -13,7 +13,7 @@ namespace ariel
         Ninja(string, Point, int, int);    // Constractor
         void move(const Character *enemy); // moves the dustanse of its speed(???)
         void slash(Character *other);      // if the ninja is alive and the enemy is at most 1 meter,takes 40 hits from enemy.
-        virtual void print() override;
+        virtual string print() override;
         int getSpeed();
     };
 }

@@ -40,7 +40,7 @@ namespace ariel
     {
         return this->location;
     }
-    void Character::print()
+    string Character::print()
     {
         stringstream output;
         streambuf *coutBuffer = std::cout.rdbuf();
@@ -50,11 +50,11 @@ namespace ariel
         string locPrint = output.str();
         if (this->isAlive())
         {
-            cout << "Name: " << this->name << " hits: " << this->hits << " location: " << locPrint << endl;
+            return "Name: " + this->name + " hits: " + to_string(this->hits) + " location: " + this->getLocation().print();
         }
         else
         {
-            cout << "Name: (" << this->name << ") location: " << locPrint << endl;
+            return + "Name: (" + this->name + ") location: " + locPrint;
         }
     }
     void Character::setHits(int newHits)

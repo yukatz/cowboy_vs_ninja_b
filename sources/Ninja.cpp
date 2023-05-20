@@ -14,14 +14,8 @@ namespace ariel{
             other->setHits(40);
         }
     }
-    void Ninja::print(){
-        stringstream output;
-        streambuf *coutBuffer = std::cout.rdbuf();
-        cout.rdbuf(output.rdbuf());
-        Character::print();
-        cout.rdbuf(coutBuffer);
-        string characterPrint = output.str();
-        cout << "N" << characterPrint << endl;
+    string Ninja::print(){
+        return "N " + Character::print();
         
     }
     int Ninja::getSpeed(){

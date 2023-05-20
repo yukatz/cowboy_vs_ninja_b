@@ -12,8 +12,8 @@ namespace ariel
       public:
         Point(double, double);
         double distance(Point &Other);
-        void print();
-        friend Point moveTowards(Point &source, Point &destenation, double distance);
+        string print();
+        Point moveTowards(Point source, Point destenation, double distance);
         double getX();
         double getY();
         void setX(double);

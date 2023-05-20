@@ -21,8 +21,7 @@ namespace ariel
   {
   private:
     Character *leader;
-    vector<Cowboy *> Cowboys;
-    vector<Ninja *> Ninjas;
+    vector<Character *> warriors;
 
   public:
     Team(Character *leader); // Constructor, limited to 10 members.When the team created, it gets pointer to leader.

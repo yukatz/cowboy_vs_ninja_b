@@ -17,11 +17,11 @@ namespace ariel
         double distance = sqrt(distX * distX + distY * distY);
         return distance;
     }
-    void Point::print()
+    string Point::print()
     {
-        cout << "(" << this->x << "," << this->y << ")" << endl;
+        return  "(" + to_string(this->x) + "," + to_string(this->y) + ")";
     }
-    Point moveTowards(Point &source, Point &destenation, double distance)
+    Point Point::moveTowards(Point source, Point destenation, double distance)
     {
         if (distance < 0)
         {
