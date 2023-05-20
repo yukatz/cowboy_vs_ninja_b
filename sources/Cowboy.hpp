@@ -10,9 +10,9 @@ namespace ariel{
 
     public:
         Cowboy(string, Point); // Constractor (created with 6 bullets and 110 hits)
-        void shoot(const Character *enemy);//if the cowboy is alive, shoot 1 bullet, take 10 hit from enemy.
+        void shoot(Character *enemy);//if the cowboy is alive, shoot 1 bullet, take 10 hit from enemy.
         bool hasboolets();//if exists bullets in stack
-        virtual string print() override;
+        virtual void print() override;
         void reload();//reload the gun with 6 bullets
         int getBullets();
     };
