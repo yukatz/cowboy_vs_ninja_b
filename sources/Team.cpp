@@ -5,7 +5,15 @@ namespace ariel
     using namespace std;
     Team::Team(Character *leader) : leader(leader)
     {
-        add(leader);
+        if (!leader->isMember())
+        {
+            add(leader);
+            leader->getInTeam();
+        }
+        else{
+            throw runtime_error("already belongs to the group");
+        }
+
     }
     void Team::add(Character *member)
     {
@@ -30,6 +38,7 @@ namespace ariel
                 }
             }
         }
+
         // Choose the victim (closest to the attac team leader)
         Character *closestEnemy;
         double distEnemy = 10000;
@@ -41,19 +50,36 @@ namespace ariel
                 closestEnemy = member;
             }
         }
-       for (Character *member : this->warriors)
+        for (Character *member : this->warriors)
         {
-            if ( member->isAlive())
+            if (member->isAlive())
             {
-                
+                if (Cowboy *cowboy = dynamic_cast<Cowboy *>(member))
+                {
+                    if (cowboy->hasboolets())
+                    {
+                        cowboy->shoot(closestEnemy);
+                    }
+                    else
+                    {
+                        cowboy->reload();
+                    }
+                }
+                if (Ninja *ninja = dynamic_cast<Ninja *>(member))
+                {
+                    if (ninja->distance(closestEnemy) <= 1)
+                    {
+                        ninja->slash(closestEnemy);
+                    }
+                    else
+                    {
+                        ninja->move(closestEnemy);
+                    }
+                }
             }
         }
-
-
-
-
-
     }
+
     int Team::stillAlive()
     {
         int count;

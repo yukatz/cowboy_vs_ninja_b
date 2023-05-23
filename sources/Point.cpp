@@ -10,7 +10,7 @@ namespace ariel
         x = _x;
         y = _y;
     }
-    double Point::distance(Point &other)
+    double Point::distance(const Point& other)const
     {
         double distX = this->x - other.x;
         double distY = this->y - other.y;

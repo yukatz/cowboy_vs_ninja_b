@@ -40,6 +40,9 @@ namespace ariel
     {
         return this->location;
     }
+    void Character::setLocation(Point newLocation){
+        this->location = newLocation; 
+    }
     string Character::print()
     {
         stringstream output;
@@ -64,6 +67,16 @@ namespace ariel
     int Character::getHits()
     {
         return hits;
+    }
+    bool Character::isMember(){
+        if(this->memOfTeam){
+            return true;
+        }
+        else return false;
+
+    }
+    void Character::getInTeam(){
+        this->memOfTeam = true;
     }
 
 }

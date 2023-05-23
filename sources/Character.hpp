@@ -19,6 +19,7 @@ namespace ariel
     string name;
     Point location;
     int hits;
+    bool memOfTeam = false;
 
   public:
     Character(string, Point, int);
@@ -27,9 +28,12 @@ namespace ariel
     void hit(int);
     string getName();
     Point getLocation();
+    void setLocation(Point newLocation);
     virtual string print();
     void setHits(int);
     int getHits();
+    bool isMember();
+    void getInTeam();
   };
 
 }
