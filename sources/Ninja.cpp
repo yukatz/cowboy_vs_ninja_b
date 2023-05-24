@@ -5,6 +5,8 @@ namespace ariel
 
     Ninja::Ninja(string _name, const Point &_location, int _hits, int _speed)
         : Character(_name, _location, _hits), speed(_speed) {}
+    Ninja::~Ninja() {}
+
     void Ninja::move(Character *enemy)
     {
 
@@ -29,14 +31,14 @@ namespace ariel
         else if (other == this)
             throw runtime_error("Same warrior");
 
-        if (getLocation().distance(other->getLocation()) <= 1)//slash when close to enemy
+        if (getLocation().distance(other->getLocation()) <= 1) // slash when close to enemy
         {
-            other->hit(40);//takes 40 hits from enemy
+            other->hit(40); // takes 40 hits from enemy
         }
     }
     string Ninja::print()
     {
-        return "N " + Character::print();//using the Character print and add N for ninja
+        return "N " + Character::print(); // using the Character print and add N for ninja
     }
     int Ninja::getSpeed()
     {

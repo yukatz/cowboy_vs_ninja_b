@@ -3,82 +3,65 @@
 namespace ariel
 {
     Team2::Team2(Character *leader) : Team(leader) {}
-    
-    void Team2::attack(Team *other)
+
+    void Team2::attack(Team *enemy)
     {
-        if (other == nullptr)
-            throw invalid_argument("Other team is null!");
-
-        else if (other == this)
-            throw runtime_error("Cannot attack self team!");
-
-        else if (other->stillAlive() == 0)
-            throw runtime_error("Other team is dead!");
-
+        if (enemy == nullptr)
+            throw invalid_argument("Enemy team doesnt exists");
+        else if (enemy->stillAlive() == 0)
+            throw runtime_error("Enemy team is dead");
         else if (stillAlive() == 0)
-            throw runtime_error("This team is dead!");
+            throw runtime_error("Attack team is dead!");
+        else if (enemy == this)
+            throw runtime_error("Same team");
 
         if (!getLeader()->isAlive())
         {
-            Character *newLeader = nullptr;
-
-            double minDistance = numeric_limits<double>::max();
-
-            for (Character *member : getWarriors())
-            {
-                if (member->isAlive() && member->distance(getLeader()) < minDistance)
-                {
-                    minDistance = member->distance(getLeader());
-                    newLeader = member;
-                }
-            }
-
-            cout << "Team leader " << getLeader()->getName() << " has died, new leader is " << newLeader->getName() << endl;
-
-            setLeader(newLeader);
+            chooseNewLeader();
         }
-
-        cout << "Team " << getLeader()->getName() << " is attacking team " << other->getLeader()->getName() << endl;
-
-        Character *victim = chooseTarget(other);
+        Character *target = chooseTarget(enemy);
 
         for (Character *member : getWarriors())
         {
-            if (!victim->isAlive())
+            if (!target->isAlive())
             {
-                if (other->stillAlive() == 0)
+                if (enemy->stillAlive() == 0)
                     break;
-
-                victim = chooseTarget(other);
+                target = chooseTarget(enemy);
             }
-
-            Cowboy *c = dynamic_cast<Cowboy *>(member);
-            Ninja *n = dynamic_cast<Ninja *>(member);
-
-            if (c != nullptr && c->isAlive())
+            Cowboy *cowboy = dynamic_cast<Cowboy *>(member);
+            Ninja *ninja = dynamic_cast<Ninja *>(member);
+            if (cowboy != nullptr && cowboy->isAlive())
             {
-                if (c->hasboolets())
-                    c->shoot(victim);
-
-                else
-                    c->reload();
+                cowboyShoot(cowboy, target);
             }
-
-            else if (n != nullptr && n->isAlive())
+            else if (ninja != nullptr && ninja->isAlive())
             {
-                if (n->getLocation().distance(victim->getLocation()) <= 1)
-                    n->slash(victim);
-
-                else
-                    n->move(victim);
+                ninjaSlash(ninja, target);
             }
         }
     }
 
+    void Team2::cowboyShoot(Cowboy *cowboy, Character *target)
+    {
+        if (cowboy->hasboolets())
+            cowboy->shoot(target);
+
+        else
+            cowboy->reload();
+    }
+
+    void Team2::ninjaSlash(Ninja *ninja, Character *target)
+    {
+        if (ninja->getLocation().distance(target->getLocation()) <= 1)
+            ninja->slash(target);
+
+        else
+            ninja->move(target);
+    }
+
     void Team2::print() const
     {
-        cout << "Team Leader: " << getLeader()->getName() << endl;
-
         for (Character *member : getWarriors())
             cout << member->print() << endl;
     }

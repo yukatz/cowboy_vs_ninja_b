@@ -86,11 +86,11 @@ namespace ariel
             }
         }
     }
-    Character *Team::chooseTarget(Team *enemy) const
+    Character *Team::chooseTarget(Team *enemy) const//Choose target, close to attack leader 
     {
         Character *target = nullptr;
 
-        double minDistance = 10000000;
+        double minDistance = numeric_limits<double>::max();
 
         for (Character *member : enemy->warriors)
         {
@@ -116,7 +116,7 @@ namespace ariel
         return this->warriors;
     }
 
-    void Team::chooseNewLeader()
+    void Team::chooseNewLeader()//Choose new leader
     {
         Character *newLeader = nullptr;
         double minDistance = numeric_limits<double>::max();
@@ -131,7 +131,7 @@ namespace ariel
         this->setLeader(newLeader);
     }
 
-    void Team::cowboysAttack(Character *target, Team *enemy)
+    void Team::cowboysAttack(Character *target, Team *enemy)//Cowboy attack
     {
         for (Character *member : this->warriors)
         {
@@ -155,7 +155,7 @@ namespace ariel
             }
         }
     }
-    void Team::ninjaAttack(Character *target, Team *enemy)
+    void Team::ninjaAttack(Character *target, Team *enemy)//Ninja attack
     {
 
         for (Character *member : warriors)

@@ -24,19 +24,20 @@ namespace ariel
   public:
     // Must functions
     Character(string, const Point &location, int);
+    virtual ~Character() {}
     bool isAlive() const;                    // if the warrior is alive (number of hits > 0)
     double distance(Character *other) const; // distance between 2 warriors, based on Point function distance
-    void hit(int);//hits the warrior, take a number of hits from
-    string getName() const;//returns the name of warrior
-    Point getLocation() const;//returns the warrior location 
-    virtual string print();//prints the warrior details
+    void hit(int);                           // hits the warrior, take a number of hits from
+    string getName() const;                  // returns the name of warrior
+    Point getLocation() const;               // returns the warrior location
+    virtual string print();                  // prints the warrior details
 
     // Help functions functions
-    void setLocation(Point &newLocation);//change the warrior location, good for ninjas
+    void setLocation(Point &newLocation); // change the warrior location, good for ninjas
     void setHits(int);
     int getHits() const;
-    bool isMember() const;//check if the warrior belongs to team
-    void getInTeam();//join team
+    bool isMember() const; // check if the warrior belongs to team
+    void getInTeam();      // join team
   };
 
 }
