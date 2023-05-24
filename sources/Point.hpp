@@ -10,10 +10,10 @@ namespace ariel
          double y;
 
       public:
-        Point(double, double);
-        double distance(const Point &Other)const;
-        string print();
-        static Point moveTowards(Point source, Point destenation, double distance);
+        Point(double, double);//Construyctor
+        double distance(Point Other)const;//distance between 2 points
+        string print();//prints the point (x,y)
+        static Point moveTowards(Point source, Point destenation, double distance);//move given distance from one point to another
         double getX();
         double getY();
         void setX(double);

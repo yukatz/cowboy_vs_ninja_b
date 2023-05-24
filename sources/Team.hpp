@@ -8,7 +8,6 @@
 #include "TrainedNinja.hpp"
 #include "YoungNinja.hpp"
 
-
 // Limited to 10 members, can be nunja or cowboy
 // When the team created, it gets pointer to leader.
 // For all teem one leader,
@@ -24,17 +23,19 @@ namespace ariel
     vector<Character *> warriors;
 
   public:
-    Team(Character *leader); // Constructor, limited to 10 members.When the team created, it gets pointer to leader.
-    virtual void add(Character *member);//Adds the warrior by it's type.
-    virtual void attack(Team *enemy);//One team attacs another, by the rules of each type of warrior.
-    int stillAlive()const; // Returns the number of alive warriors in the team.
-    virtual void print()const;     // Prints the details of all warriors in the team.
-    // Distructor
-    virtual ~Team() = default;                      
-    Team(const Team &) = delete;            // Copy constructor
-    Team &operator=(const Team &) = delete; // Copy assignment operator
-    Team(Team &&) = delete;                 // Move constructor
-    Team &operator=(Team &&) = delete;  
+    Team(Character *leader);             // Constructor, limited to 10 members.When the team created, it gets pointer to leader.
+    virtual void add(Character *member); // Adds the warrior by it's type.
+    virtual void attack(Team *enemy);    // One team attacs another, by the rules of each type of warrior.
+    int stillAlive() const;              // Returns the number of alive warriors in the team.
+    virtual void print() const;          // Prints the details of all warriors in the team.
+    virtual ~Team();
+    virtual Character *chooseTarget(Team *other) const;
+    Character *getLeader() const;                   // returns the leader
+    void setLeader(Character *leader);              // choose new leader
+    const vector<Character *> &getWarriors() const; // return the warriors
+    void chooseNewLeader();
+    void cowboysAttack(Character *target, Team *enemy);
+    void ninjaAttack(Character *target, Team *enemy);
 
     // Going over all members of the team (for attacking, printing, or comparing)
     // will always be done in the following order:

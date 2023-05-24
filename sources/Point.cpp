@@ -10,7 +10,7 @@ namespace ariel
         x = _x;
         y = _y;
     }
-    double Point::distance(const Point& other)const
+    double Point::distance(Point other) const
     {
         double distX = this->x - other.x;
         double distY = this->y - other.y;
@@ -19,23 +19,21 @@ namespace ariel
     }
     string Point::print()
     {
-        return  "(" + to_string(this->x) + "," + to_string(this->y) + ")";
+        return "(" + to_string(this->x) + "," + to_string(this->y) + ")";
     }
     Point Point::moveTowards(Point source, Point destenation, double distance)
     {
         if (distance < 0)
-        {
-            throw invalid_argument("The distance can't be negative");
-        }
-        if (distance == source.distance(destenation))
-        {
+            throw invalid_argument("Distance cant be negative");
+
+        double dest = source.distance(destenation);
+
+        if (dest <= distance)
             return destenation;
-        }
-        double ratio = distance / source.distance(destenation);
-        double newX = source.x + ((destenation.x - source.x) * ratio);
-        double newY = source.y + ((destenation.y - source.y) * ratio);
-        Point newP(newX, newY);
-        return newP;
+
+        double newX = source.x + (distance * (destenation.x - source.x) /dest);
+        double newY = source.y + (distance * (destenation.y - source.y) / dest);
+        return Point(newX,newY);
     }
 
     double Point::getX()

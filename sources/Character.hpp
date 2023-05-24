@@ -5,8 +5,8 @@
 #include <iostream>
 #include <sstream>
 #include "Point.hpp"
-//#include "Cowboy.hpp"
-//#include "Ninja.hpp"
+// #include "Cowboy.hpp"
+// #include "Ninja.hpp"
 
 namespace ariel
 {
@@ -16,24 +16,27 @@ namespace ariel
   class Character
   {
   private:
-    string name;
-    Point location;
-    int hits;
-    bool memOfTeam = false;
+    string name;            // name of warrior
+    Point location;         // warrior location
+    int hits;               // number of hits
+    bool memOfTeam = false; // flag = true if the warrior is belong to team
 
   public:
-    Character(string, Point, int);
-    bool isAlive()const;
-    double distance(Character *other);
-    void hit(int);
-    string getName();
-    Point getLocation()const;
-    void setLocation(Point newLocation);
-    virtual string print();
+    // Must functions
+    Character(string, const Point &location, int);
+    bool isAlive() const;                    // if the warrior is alive (number of hits > 0)
+    double distance(Character *other) const; // distance between 2 warriors, based on Point function distance
+    void hit(int);//hits the warrior, take a number of hits from
+    string getName() const;//returns the name of warrior
+    Point getLocation() const;//returns the warrior location 
+    virtual string print();//prints the warrior details
+
+    // Help functions functions
+    void setLocation(Point &newLocation);//change the warrior location, good for ninjas
     void setHits(int);
-    int getHits();
-    bool isMember();
-    void getInTeam();
+    int getHits() const;
+    bool isMember() const;//check if the warrior belongs to team
+    void getInTeam();//join team
   };
 
 }

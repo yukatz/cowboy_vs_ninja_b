@@ -8,7 +8,7 @@ namespace ariel
     class TrainedNinja : public Ninja
     {
     public:
-        TrainedNinja(string, Point); // Constructor created with speed = 12, 120 hits.
+        TrainedNinja(string, const Point &location); // Constructor created with speed = 12, 120 hits.
     };
 }
 #endif

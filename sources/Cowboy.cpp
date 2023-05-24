@@ -3,42 +3,32 @@
 namespace ariel
 {
 
-    Cowboy::Cowboy(string _name, Point _location)
+    Cowboy::Cowboy(string _name, const Point &_location)
         : Character(_name, _location, 110), numOfBullets(6) {}
     void Cowboy::shoot(Character *enemy)
     {
         if (enemy == nullptr)
-            throw invalid_argument("Other character is null!");
-
-        else if (enemy == this)
-            throw runtime_error("Cannot shoot yourself!");
-
+            throw invalid_argument("Enemy doesnt exists");
         else if (!isAlive())
-            throw runtime_error("Cannot shoot while dead!");
-
+            throw runtime_error("Dead cowboy cant shoot");
         else if (!enemy->isAlive())
-            throw runtime_error("Cannot shoot a dead character!");
-
+            throw runtime_error("Enemy alredy dead");
+        else if (enemy == this)
+            throw runtime_error("Same warrior");
         else
-
-            if (this->numOfBullets > 0)
+            if (this->numOfBullets > 0)//stack isnt empty
         {
-            this->numOfBullets -= 1;
-            enemy->hit(10);
+            this->numOfBullets -= 1;//one bullet for shoot
+            enemy->hit(10);//takes 10 hits from enemy
         }
     }
-    bool Cowboy::hasboolets()
+    bool Cowboy::hasboolets() const
     {
-        if (this->numOfBullets > 0)
-        {
-            return true;
-        }
-        else
-            return false;
+       return this->numOfBullets > 0;
     }
     string Cowboy::print()
     {
-        return "C " + Character::print();
+        return "C " + Character::print();//using the Character print and add C for cowboy
     }
     void Cowboy::reload()
     {
