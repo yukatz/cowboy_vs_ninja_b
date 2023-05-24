@@ -13,8 +13,8 @@ namespace ariel
 
   public:
     Team2(Character *leader);
-    void add(Character *member) override;  // Overiding the add order
     void attack(Team *enemy) override; // Overiding the attac rules
+    void print()const override;
   };
 }
 #endif

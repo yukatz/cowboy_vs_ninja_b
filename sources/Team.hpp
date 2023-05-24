@@ -27,8 +27,8 @@ namespace ariel
     Team(Character *leader); // Constructor, limited to 10 members.When the team created, it gets pointer to leader.
     virtual void add(Character *member);//Adds the warrior by it's type.
     virtual void attack(Team *enemy);//One team attacs another, by the rules of each type of warrior.
-    int stillAlive(); // Returns the number of alive warriors in the team.
-    void print();     // Prints the details of all warriors in the team.
+    int stillAlive()const; // Returns the number of alive warriors in the team.
+    virtual void print()const;     // Prints the details of all warriors in the team.
     // Distructor
     virtual ~Team() = default;                      
     Team(const Team &) = delete;            // Copy constructor

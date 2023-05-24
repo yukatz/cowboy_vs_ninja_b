@@ -7,25 +7,43 @@ namespace ariel
     {
         if (!leader->isMember())
         {
-            add(leader);
-            leader->getInTeam();
+            this->add(leader);
         }
-        else{
-            throw runtime_error("already belongs to the group");
+        else
+        {
+            throw runtime_error("Already belongs to team");
         }
-
     }
+
     void Team::add(Character *member)
     {
-        if (this->warriors.size() == 10)
-        {
-            throw runtime_error("The team can't include more then 10 members");
-        }
+        if (member == nullptr)
+            throw invalid_argument("Member not exists");
+
+        else if (member->isMember())
+            throw runtime_error("Already belongs to team");
+
+        else if (this->warriors.size() == 10)
+            throw runtime_error("Team is full!");
+
         this->warriors.push_back(member);
+        member->getInTeam();
     }
+
     void Team::attack(Team *enemy)
     {
-        if (!(this->leader->isAlive())) // Chosing a new leader
+        // Basic shecks
+        if (enemy == nullptr)
+            throw invalid_argument("Other team not exists");
+
+        else if (enemy->stillAlive() == 0)
+            throw runtime_error("There is no one alive in the enemy team");
+
+       // else if (stillAlive() == 0)
+            //throw runtime_error("No one alive in attack team");
+
+        // If the leader is dead, chosing a new leader
+        if (!(this->leader->isAlive()))
         {
             Character *closest;
             double dist = 10000;
@@ -39,7 +57,7 @@ namespace ariel
             }
         }
 
-        // Choose the victim (closest to the attac team leader)
+        // Choose the victim
         Character *closestEnemy;
         double distEnemy = 10000;
         for (Character *member : enemy->warriors)
@@ -50,39 +68,69 @@ namespace ariel
                 closestEnemy = member;
             }
         }
+
         for (Character *member : this->warriors)
         {
-            if (member->isAlive())
+            if (!closestEnemy->isAlive())
             {
-                if (Cowboy *cowboy = dynamic_cast<Cowboy *>(member))
+                if (enemy->stillAlive() == 0)
+                    break;
+
+                for (Character *member : enemy->warriors)
                 {
-                    if (cowboy->hasboolets())
+                    if (member->distance(this->leader) < distEnemy && member->isAlive())
                     {
-                        cowboy->shoot(closestEnemy);
-                    }
-                    else
-                    {
-                        cowboy->reload();
+                        distEnemy = member->distance(this->leader);
+                        closestEnemy = member;
                     }
                 }
-                if (Ninja *ninja = dynamic_cast<Ninja *>(member))
+            }
+
+            Cowboy *cowboy = dynamic_cast<Cowboy *>(member);
+
+            if (cowboy != nullptr && cowboy->isAlive())
+            {
+                if (cowboy->hasboolets())
+                    cowboy->shoot(closestEnemy);
+
+                else
+                    cowboy->reload();
+            }
+        }
+
+        for (Character *member : this->warriors)
+        {
+            if (!closestEnemy->isAlive())
+            {
+                if (enemy->stillAlive() == 0)
+                    break;
+
+                for (Character *member : enemy->warriors)
                 {
-                    if (ninja->distance(closestEnemy) <= 1)
+                    if (member->distance(this->leader) < distEnemy && member->isAlive())
                     {
-                        ninja->slash(closestEnemy);
-                    }
-                    else
-                    {
-                        ninja->move(closestEnemy);
+                        distEnemy = member->distance(this->leader);
+                        closestEnemy = member;
                     }
                 }
+            }
+
+            Ninja *ninja = dynamic_cast<Ninja *>(member);
+
+            if (ninja != nullptr && ninja->isAlive())
+            {
+                if (ninja->getLocation().distance(closestEnemy->getLocation()) <= 1)
+                    ninja->slash(closestEnemy);
+
+                else
+                    ninja->move(closestEnemy);
             }
         }
     }
 
-    int Team::stillAlive()
+    int Team::stillAlive() const
     {
-        int count;
+        int count = 0;
         for (Character *member : this->warriors)
         {
             if (member->isAlive())
@@ -92,7 +140,8 @@ namespace ariel
         }
         return count;
     }
-    void Team::print()
+
+    void Team::print() const
     {
         for (Character *member : this->warriors)
         {

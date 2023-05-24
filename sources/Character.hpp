@@ -23,11 +23,11 @@ namespace ariel
 
   public:
     Character(string, Point, int);
-    bool isAlive();
+    bool isAlive()const;
     double distance(Character *other);
     void hit(int);
     string getName();
-    Point getLocation();
+    Point getLocation()const;
     void setLocation(Point newLocation);
     virtual string print();
     void setHits(int);

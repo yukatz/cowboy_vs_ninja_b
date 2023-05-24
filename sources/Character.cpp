@@ -5,13 +5,13 @@ namespace ariel
     using namespace std;
     Character::Character(string _name, Point _location, int _hits)
         : name(_name), location(_location), hits(_hits) {}
-    bool Character::isAlive()
+
+    bool Character::isAlive() const
     {
-        if (this->hits > 0)
-            return true;
-        else
-            return false;
+        return (this->hits > 0);
     }
+
+
     double Character::distance(Character *other)
     {
         double distance = this->location.distance(other->location);
@@ -19,29 +19,26 @@ namespace ariel
     }
     void Character::hit(int numOfHits)
     {
-        if (numOfHits > 0)
+        if (numOfHits < 0)
         {
-            if (numOfHits > this->hits) // Cant take more then exists
-            {
-                numOfHits = this->hits;
-            }
-            this->hits -= numOfHits;
+            throw std::invalid_argument("Number of hits can't be negative");
         }
         else
         {
-            throw std::invalid_argument("Number of hits can't be negative");
+            this->hits -= (this->hits - numOfHits < 0 ? this->hits : numOfHits);
         }
     }
     string Character::getName()
     {
         return this->name;
     }
-    Point Character::getLocation()
+    Point Character::getLocation()const
     {
         return this->location;
     }
-    void Character::setLocation(Point newLocation){
-        this->location = newLocation; 
+    void Character::setLocation(Point newLocation)
+    {
+        this->location = newLocation;
     }
     string Character::print()
     {
@@ -57,7 +54,7 @@ namespace ariel
         }
         else
         {
-            return + "Name: (" + this->name + ") location: " + locPrint;
+            return +"Name: (" + this->name + ") location: " + locPrint;
         }
     }
     void Character::setHits(int newHits)
@@ -68,14 +65,17 @@ namespace ariel
     {
         return hits;
     }
-    bool Character::isMember(){
-        if(this->memOfTeam){
+    bool Character::isMember()
+    {
+        if (this->memOfTeam)
+        {
             return true;
         }
-        else return false;
-
+        else
+            return false;
     }
-    void Character::getInTeam(){
+    void Character::getInTeam()
+    {
         this->memOfTeam = true;
     }
 
